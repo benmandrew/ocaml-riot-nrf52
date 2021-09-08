@@ -237,7 +237,7 @@ ifneq (, $(filter $(GLOBAL_GOALS), $(MAKECMDGOALS)))
   include $(RIOTMAKE)/buildtests.inc.mk
 else
 
-all: link
+# all: link
 
 # Folders to search: First the external boards, than the official
 BOARDSDIRS := $(EXTERNAL_BOARD_DIRS) $(RIOTBOARD)
@@ -458,6 +458,8 @@ include $(RIOTMAKE)/toolchain/$(TOOLCHAIN).inc.mk
 # Append ldscript path after importing CPU and board makefiles to allow
 # overriding the core ldscripts
 LINKFLAGS += -L$(RIOTBASE)/core/ldscripts
+
+LINKFLAGS += $(OCAMLDIR)/runtime/libcamlrun.a -lm
 
 # Tell ccache to pass the original file to the compiler, instead of passing the
 # preprocessed code. Without this setting, the compilation will fail with

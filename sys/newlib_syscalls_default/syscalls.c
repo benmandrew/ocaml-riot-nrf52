@@ -613,6 +613,11 @@ int _isatty_r(struct _reent *r, int fd)
     return 0;
 }
 
+int _isatty(void)
+{
+    return 0;
+}
+
 /**
  * @brief Send a signal to a thread
  *

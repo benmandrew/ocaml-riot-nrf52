@@ -64,7 +64,7 @@ CFLAGS += -ffunction-sections -fdata-sections
 OPTIONAL_CFLAGS += -gz
 
 # Enable all default warnings and all extra warnings
-CFLAGS += -Wall -Wextra
+# CFLAGS += -Wall -Wextra
 # Enable additional checks for printf/scanf format strings
 OPTIONAL_CFLAGS += -Wformat=2
 OPTIONAL_CFLAGS += -Wformat-overflow
@@ -79,5 +79,6 @@ ifeq (,$(filter -DDEVELHELP,$(CFLAGS)))
   endif
 endif
 
+CFLAGS += -I$(OCAMLDIR)/runtime -Wno-incompatible-pointer-types
 # Add the optional flags that are not architecture/toolchain blacklisted
 CFLAGS += $(filter-out $(OPTIONAL_CFLAGS_BLACKLIST),$(OPTIONAL_CFLAGS))
