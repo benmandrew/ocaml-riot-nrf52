@@ -1,0 +1,15 @@
+Makeconf
+ocaml-freestanding.pc
+freestanding.conf
+stubs/*.o
+ocaml/
+.merlin
+_build
+
+bin/
+
+example/hello_caml.cds
+example/hello.cmi
+example/hello.cmo
+
+git-backup/
