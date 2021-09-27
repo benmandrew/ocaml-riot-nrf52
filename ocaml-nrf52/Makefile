@@ -35,13 +35,13 @@ CFLAGS := $(subst -Wold-style-definition,,$(CFLAGS))
 CFLAGS := $(subst -O3,,$(CFLAGS))
 CFLAGS := $(subst -O2,,$(CFLAGS))
 CFLAGS := $(subst -O1,,$(CFLAGS))
-CFLAGS += -I$(CURDIR)/ocaml/runtime -Wno-format-nonliteral -Wno-strict-prototypes -lm -s
+CFLAGS += -I$(CURDIR)/ocaml/runtime -Wno-format-nonliteral -Wno-strict-prototypes -s 
 
 ASPPFLAGS := CFLAGS
 
 all:
 	$(RM) -f example/hello_caml.c
-	ocamlc -g -custom -output-obj -o example/hello_caml.c example/hello.ml
+	ocamlc -output-obj -o example/hello_caml.c example/hello.ml
 	$(MAKE) ocaml
 	$(MAKE) riot
 	cd bin/nrf52840-mdk ; \
@@ -53,7 +53,7 @@ riot:
 	$(MAKE) -C $(RIOTBASE) -f Makefile.include link CFLAGS='$(CFLAGS)'
 
 ocaml: Makeconf ocaml/Makefile.config ocaml/runtime/caml/version.h
-	$(MAKE) -C ocaml/runtime libcamlrun.a
+	$(MAKE) -C ocaml/runtime libcamlrun.a CFLAGS='$(CFLAGS) --specs=nosys.specs'
 
 
 Makeconf:
@@ -123,9 +123,9 @@ ocaml/runtime/caml/version.h: ocaml/Makefile.config
 include Makeconf
 
 # CFLAGS used to build nolibc / openlibm / ocaml runtime
-LOCAL_CFLAGS=$(MAKECONF_CFLAGS) -isystem /Users/ben/Desktop/toolchains/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/newlib-nano -I$(RIOTBASE)/core/include -I$(RIOTBASE)/drivers/include -I$(RIOTBASE)/sys/include -I$(RIOTBASE)/boards/nrf52840-mdk/include -I$(RIOTBASE)/boards/common/nrf52/include -I$(RIOTBASE)/cpu/nrf52/include -I$(RIOTBASE)/cpu/nrf5x_common/include -I$(RIOTBASE)/cpu/cortexm_common/include -I$(RIOTBASE)/cpu/cortexm_common/include/vendor
+LOCAL_CFLAGS=$(MAKECONF_CFLAGS) --specs=nosys.specs -I$(RIOTBASE)/core/include -I$(RIOTBASE)/drivers/include -I$(RIOTBASE)/sys/include -I$(RIOTBASE)/boards/nrf52840-mdk/include -I$(RIOTBASE)/boards/common/nrf52/include -I$(RIOTBASE)/cpu/nrf52/include -I$(RIOTBASE)/cpu/nrf5x_common/include -I$(RIOTBASE)/cpu/cortexm_common/include -I$(RIOTBASE)/cpu/cortexm_common/include/vendor
 # CFLAGS used by the OCaml compiler to build C stubs
-GLOBAL_CFLAGS=$(MAKECONF_CFLAGS) -isystem /Users/ben/Desktop/toolchains/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/newlib-nano -I$(RIOTBASE)/core/include -I$(RIOTBASE)/drivers/include -I$(RIOTBASE)/sys/include -I$(RIOTBASE)/boards/nrf52840-mdk/include -I$(RIOTBASE)/boards/common/nrf52/include -I$(RIOTBASE)/cpu/nrf52/include -I$(RIOTBASE)/cpu/nrf5x_common/include -I$(RIOTBASE)/cpu/cortexm_common/include -I$(RIOTBASE)/cpu/cortexm_common/include/vendor
+GLOBAL_CFLAGS=$(MAKECONF_CFLAGS) --specs=nosys.specs -I$(RIOTBASE)/core/include -I$(RIOTBASE)/drivers/include -I$(RIOTBASE)/sys/include -I$(RIOTBASE)/boards/nrf52840-mdk/include -I$(RIOTBASE)/boards/common/nrf52/include -I$(RIOTBASE)/cpu/nrf52/include -I$(RIOTBASE)/cpu/nrf5x_common/include -I$(RIOTBASE)/cpu/cortexm_common/include -I$(RIOTBASE)/cpu/cortexm_common/include/vendor
 
 CAMLOPT:=$(shell which ocamlopt)
 CAMLRUN:=$(shell which ocamlrun)

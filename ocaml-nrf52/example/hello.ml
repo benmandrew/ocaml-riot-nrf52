@@ -1,6 +1,6 @@
 
 (* option utilities *)
-let optmin x y =
+(* let optmin x y =
   match x,y with
   | None,a | a,None -> a
   | Some x, Some y-> Some (min x y)
@@ -40,7 +40,16 @@ let () =
   | Some v -> print_int v;
   print_char '\n';
   flush stdout
-  ;;
+  ;; *)
+
+(* let main =
+  10 + 5
+  ;; *)
 
 (* let () =
-  Printf.printf "Hello from OCaml!" *)
+  Printf.printf "Hello World!" *)
+
+let () =
+  print_string "Hello World!\n";
+  flush stdout
+  ;;
